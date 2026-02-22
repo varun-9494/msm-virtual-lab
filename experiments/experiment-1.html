@@ -230,9 +230,67 @@
             #controls { width: 255px; }
             #system-badge { right: 265px; }
         }
+
+        /* ---- MOBILE ---- */
         @media (max-width: 768px) {
-            .sys-tabs { display: none; }
-            #controls { position: absolute; right: -100%; width: 260px; height: calc(100vh - 64px); transition: right 0.3s; }
+            body { overflow: auto; }
+
+            header { padding: 0 12px; height: auto; min-height: 56px; flex-wrap: wrap; gap: 6px; padding: 10px 12px; }
+            .logo { font-size: 1.1rem; }
+            .logo-img { height: 36px; }
+            .sys-tabs { display: flex; flex-wrap: wrap; gap: 4px; order: 3; width: 100%; padding-bottom: 8px; }
+            .sys-btn { font-size: 0.65rem; padding: 5px 9px; }
+            .back-btn { font-size: 0.72rem; padding: 6px 12px; margin-left: 0; }
+            .header-right { gap: 4px; }
+
+            #main-area {
+                flex-direction: column;
+                height: auto;
+                min-height: calc(100vh - 100px);
+            }
+
+            #canvas-container {
+                width: 100%;
+                height: 55vw;
+                min-height: 260px;
+                max-height: 380px;
+                position: relative;
+                flex-shrink: 0;
+            }
+
+            #info-panel {
+                position: static;
+                width: 100%;
+                border-radius: 0;
+                border-left: none;
+                border-top: 4px solid var(--accent);
+                padding: 16px;
+                backdrop-filter: none;
+                background: #0d1117;
+            }
+
+            #system-badge { display: none; }
+
+            .credits-badge {
+                position: static;
+                border-radius: 0;
+                border-left: none;
+                border-top: 4px solid #ffd700;
+                max-width: 100%;
+                padding: 10px 16px;
+            }
+
+            #controls {
+                position: static;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border-left: none;
+                border-top: 1px solid var(--border);
+                padding: 16px;
+            }
+
+            .lattice-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
