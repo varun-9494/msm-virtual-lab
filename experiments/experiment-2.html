@@ -99,7 +99,14 @@
 
         /* --- LAYOUT --- */
         #main-area { display: flex; height: calc(100vh - 64px); }
-        #canvas-container { flex-grow: 1; position: relative; }
+        #canvas-container { flex-grow: 1; position: relative; overflow: hidden; }
+
+        /* Ensure canvas fills container */
+        #canvas-container canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
 
         /* --- INFO PANEL --- */
         #info-panel {
@@ -490,14 +497,18 @@ class CrystalSim {
 
     initThree() {
         this.scene = new THREE.Scene();
-        
-        this.camera = new THREE.PerspectiveCamera(40, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
+
+        // Use fallback dimensions in case container is not yet sized
+        const w = this.container.offsetWidth || window.innerWidth;
+        const h = this.container.offsetHeight || (window.innerHeight - 64);
+
+        this.camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 1000);
         this.camera.position.set(0, 0, 24);
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+        this.renderer.setSize(w, h);
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.localClippingEnabled = true; 
+        this.renderer.localClippingEnabled = true;
         this.container.appendChild(this.renderer.domElement);
 
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
@@ -509,21 +520,28 @@ class CrystalSim {
         const dir = new THREE.DirectionalLight(0xffffff, 1.0);
         dir.position.set(10, 10, 20);
         this.scene.add(dir);
-        
+
         // Static Groups
         this.atomGroup = new THREE.Group();
         this.capGroup = new THREE.Group();
         this.wireGroup = new THREE.Group();
-        
         this.scene.add(this.atomGroup);
         this.scene.add(this.capGroup);
         this.scene.add(this.wireGroup);
 
-        window.addEventListener('resize', () => {
-            this.camera.aspect = this.container.offsetWidth / this.container.offsetHeight;
-            this.camera.updateProjectionMatrix();
-            this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
-        });
+        // Resize: re-read real dimensions after layout settles
+        const onResize = () => {
+            const rw = this.container.offsetWidth;
+            const rh = this.container.offsetHeight;
+            if (rw > 0 && rh > 0) {
+                this.camera.aspect = rw / rh;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(rw, rh);
+            }
+        };
+        window.addEventListener('resize', onResize);
+        // Re-check after a short delay to catch flex layout settling
+        setTimeout(onResize, 100);
     }
 
     setMode(mode) {
