@@ -229,46 +229,26 @@
             body { overflow: auto; }
 
             header { padding: 10px 14px; height: auto; flex-wrap: wrap; gap: 6px; }
-            .logo { font-size: 1.1rem; }
-            .logo-img { height: 36px; }
+            .logo { font-size: 1rem; }
+            .logo-img { height: 34px; }
             .nav { flex-wrap: wrap; gap: 4px; }
             .nav-btn { font-size: 0.65rem; padding: 6px 10px; }
-            .back-btn { font-size: 0.72rem; padding: 6px 12px; }
+            .back-btn { font-size: 0.7rem; padding: 5px 11px; }
 
-            #main-area {
-                flex-direction: column;
-                height: auto;
-            }
+            #main-area { flex-direction: column; height: auto; }
 
+            /* Canvas: clean, fixed height, no overlays */
             #canvas-container {
                 width: 100%;
-                height: 55vw;
-                min-height: 260px;
-                max-height: 360px;
-                position: relative;
+                height: 260px;
                 flex-shrink: 0;
+                position: relative;
             }
 
-            #info-panel {
-                position: static;
-                width: 100%;
-                border-radius: 0;
-                border-left: none;
-                border-top: 4px solid var(--accent);
-                padding: 16px;
-                backdrop-filter: none;
-                background: #0d0315;
-            }
+            /* Hide all absolute overlays from canvas */
+            #info-panel, .credits-badge { display: none; }
 
-            .credits-badge {
-                position: static;
-                border-radius: 0;
-                border-left: none;
-                border-top: 4px solid #ffd700;
-                max-width: 100%;
-                padding: 10px 16px;
-            }
-
+            /* Controls below canvas */
             #controls {
                 position: static;
                 width: 100%;
@@ -276,10 +256,56 @@
                 box-shadow: none;
                 border-left: none;
                 border-top: 1px solid var(--border);
-                padding: 16px;
+                padding: 14px;
             }
+
+            /* Mobile info strip */
+            #mobile-info {
+                display: block;
+                background: #0d0315;
+                border-top: 3px solid var(--accent);
+                padding: 14px 16px;
+            }
+            #mobile-info .mi-title {
+                font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 6px;
+            }
+            #mobile-info .mi-desc {
+                font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;
+            }
+            #mobile-info .mi-stats {
+                display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+            }
+            #mobile-info .mi-stat {
+                background: rgba(255,255,255,0.04);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 8px 12px;
+            }
+            #mobile-info .mi-stat-label {
+                font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;
+                letter-spacing: 0.8px; margin-bottom: 3px;
+            }
+            #mobile-info .mi-stat-val {
+                font-size: 1rem; font-weight: 700; color: var(--accent-glow); font-family: monospace;
+            }
+
+            /* Mobile credits */
+            #mobile-credits {
+                display: flex; align-items: center; gap: 12px;
+                background: #0a0003;
+                border-top: 3px solid #ffd700;
+                padding: 12px 16px;
+            }
+            #mobile-credits img {
+                width: 40px; height: 40px; border-radius: 50%;
+                border: 2px solid #ffd700; object-fit: cover; flex-shrink: 0;
+            }
+            #mobile-credits .mc-name { font-weight: 700; color: #ffd700; font-size: 0.85rem; }
+            #mobile-credits .mc-detail { font-size: 0.7rem; color: var(--text-muted); }
         }
-    </style>
+
+        /* Hide mobile-only elements on desktop */
+        #mobile-info, #mobile-credits { display: none; }    </style>
 </head>
 <body>
 
@@ -391,7 +417,38 @@
     </div>
 </div>
 
-<script>
+<!-- MOBILE INFO STRIP -->
+<div id="mobile-info">
+    <div class="mi-title" id="m-title">Simple Cubic</div>
+    <div class="mi-desc" id="m-desc">Atoms at corners only.</div>
+    <div class="mi-stats">
+        <div class="mi-stat">
+            <div class="mi-stat-label">Coordination No.</div>
+            <div class="mi-stat-val" id="m-coord">6</div>
+        </div>
+        <div class="mi-stat">
+            <div class="mi-stat-label">APF</div>
+            <div class="mi-stat-val" id="m-apf">0.52</div>
+        </div>
+        <div class="mi-stat">
+            <div class="mi-stat-label">Atoms / Cell</div>
+            <div class="mi-stat-val" id="m-atoms">1</div>
+        </div>
+        <div class="mi-stat">
+            <div class="mi-stat-label">Formula</div>
+            <div class="mi-stat-val" id="m-form" style="font-size:0.78rem;">8 × 1/8</div>
+        </div>
+    </div>
+</div>
+
+<!-- MOBILE CREDITS -->
+<div id="mobile-credits">
+    <img src="../hemanth-photo.png" alt="Hemanth Sagar Reddy">
+    <div>
+        <div class="mc-name">Hemanth Sagar Reddy</div>
+        <div class="mc-detail">Roll No: 25211A0329 · B.Tech Mechanical Engineering</div>
+    </div>
+</div>
 class CrystalSim {
     constructor() {
         this.container = document.getElementById('canvas-container');
@@ -478,12 +535,22 @@ class CrystalSim {
             'HCP': {t:'Hexagonal Close', d:'ABAB Sequence. 12 Corners, 2 Face, 3 Mid.', c:'12', a:'0.74', n:'6', f:'12×1/6 + 2×1/2 + 3'}
         };
         const d = db[mode];
+
+        // Desktop panel
         document.getElementById('info-title').innerText = d.t;
         document.getElementById('info-desc').innerText = d.d;
         document.getElementById('info-coord').innerText = d.c;
         document.getElementById('info-apf').innerText = d.a;
         document.getElementById('info-atoms').innerText = d.n;
         document.getElementById('info-form').innerText = d.f;
+
+        // Mobile strip
+        document.getElementById('m-title').innerText = d.t;
+        document.getElementById('m-desc').innerText = d.d;
+        document.getElementById('m-coord').innerText = d.c;
+        document.getElementById('m-apf').innerText = d.a;
+        document.getElementById('m-atoms').innerText = d.n;
+        document.getElementById('m-form').innerText = d.f;
         
         this.update();
     }

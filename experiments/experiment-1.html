@@ -235,51 +235,33 @@
         @media (max-width: 768px) {
             body { overflow: auto; }
 
-            header { padding: 0 12px; height: auto; min-height: 56px; flex-wrap: wrap; gap: 6px; padding: 10px 12px; }
-            .logo { font-size: 1.1rem; }
-            .logo-img { height: 36px; }
-            .sys-tabs { display: flex; flex-wrap: wrap; gap: 4px; order: 3; width: 100%; padding-bottom: 8px; }
-            .sys-btn { font-size: 0.65rem; padding: 5px 9px; }
-            .back-btn { font-size: 0.72rem; padding: 6px 12px; margin-left: 0; }
-            .header-right { gap: 4px; }
-
-            #main-area {
-                flex-direction: column;
-                height: auto;
-                min-height: calc(100vh - 100px);
+            header {
+                height: auto; flex-wrap: wrap; gap: 6px;
+                padding: 10px 12px;
             }
+            .logo { font-size: 1rem; }
+            .logo-img { height: 34px; }
+            .header-right { gap: 4px; flex-wrap: wrap; }
+            .sys-tabs { flex-wrap: wrap; gap: 3px; }
+            .sys-btn { font-size: 0.62rem; padding: 5px 8px; }
+            .back-btn { font-size: 0.7rem; padding: 5px 11px; margin-left: 0; }
 
+            #main-area { flex-direction: column; height: auto; }
+
+            /* Canvas: full width, fixed height, nothing overlapping it */
             #canvas-container {
                 width: 100%;
-                height: 55vw;
-                min-height: 260px;
-                max-height: 380px;
-                position: relative;
+                height: 260px;
                 flex-shrink: 0;
+                position: relative;
             }
 
-            #info-panel {
-                position: static;
-                width: 100%;
-                border-radius: 0;
-                border-left: none;
-                border-top: 4px solid var(--accent);
-                padding: 16px;
-                backdrop-filter: none;
-                background: #0d1117;
-            }
+            /* Hide ALL absolute-positioned overlays so canvas is clean */
+            #info-panel,
+            #system-badge,
+            .credits-badge { display: none; }
 
-            #system-badge { display: none; }
-
-            .credits-badge {
-                position: static;
-                border-radius: 0;
-                border-left: none;
-                border-top: 4px solid #ffd700;
-                max-width: 100%;
-                padding: 10px 16px;
-            }
-
+            /* Controls panel becomes a scrollable section below the canvas */
             #controls {
                 position: static;
                 width: 100%;
@@ -287,11 +269,74 @@
                 box-shadow: none;
                 border-left: none;
                 border-top: 1px solid var(--border);
-                padding: 16px;
+                padding: 14px;
+                gap: 16px;
             }
 
             .lattice-grid { grid-template-columns: repeat(3, 1fr); }
+
+            /* Mobile info strip — shown only on mobile */
+            #mobile-info {
+                display: block;
+                background: #0d1117;
+                border-top: 3px solid var(--accent);
+                padding: 14px 16px;
+            }
+            #mobile-info .mi-title {
+                font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 2px;
+            }
+            #mobile-info .mi-system {
+                font-size: 0.72rem; color: var(--accent-glow); margin-bottom: 8px;
+            }
+            #mobile-info .mi-desc {
+                font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;
+            }
+            #mobile-info .mi-stats {
+                display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+            }
+            #mobile-info .mi-stat {
+                background: rgba(255,255,255,0.04);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 8px 12px;
+            }
+            #mobile-info .mi-stat-label {
+                font-size: 0.67rem; color: var(--text-muted); text-transform: uppercase;
+                letter-spacing: 0.8px; margin-bottom: 3px;
+            }
+            #mobile-info .mi-stat-val {
+                font-size: 1rem; font-weight: 700; color: var(--accent-glow); font-family: monospace;
+            }
+            #mobile-info .mi-params {
+                margin-top: 10px;
+                background: rgba(0,201,167,0.06);
+                border: 1px solid rgba(0,201,167,0.18);
+                border-radius: 8px;
+                padding: 10px 12px;
+                display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+            }
+            #mobile-info .mi-param-key { font-size: 0.7rem; color: var(--text-muted); }
+            #mobile-info .mi-param-val { font-size: 0.75rem; color: #fff; font-family: monospace; }
+
+            /* Mobile credits strip */
+            #mobile-credits {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                background: #0a0c10;
+                border-top: 3px solid #ffd700;
+                padding: 12px 16px;
+            }
+            #mobile-credits img {
+                width: 40px; height: 40px; border-radius: 50%;
+                border: 2px solid #ffd700; object-fit: cover; flex-shrink: 0;
+            }
+            #mobile-credits .mc-name { font-weight: 700; color: #ffd700; font-size: 0.85rem; }
+            #mobile-credits .mc-detail { font-size: 0.7rem; color: var(--text-muted); }
         }
+
+        /* Hide mobile-only elements on desktop */
+        #mobile-info, #mobile-credits { display: none; }
     </style>
 </head>
 <body>
@@ -428,6 +473,50 @@
                 Hover over labels in the info panel for definitions.
             </p>
         </div>
+    </div>
+</div>
+
+<!-- MOBILE INFO STRIP (hidden on desktop, shown on mobile) -->
+<div id="mobile-info">
+    <div class="mi-title" id="m-title">Simple Cubic (P)</div>
+    <div class="mi-system" id="m-system">Crystal System: Cubic</div>
+    <div class="mi-desc" id="m-desc">All three axes equal, all angles 90°. Atoms at corners only.</div>
+    <div class="mi-stats">
+        <div class="mi-stat">
+            <div class="mi-stat-label">Lattice Points</div>
+            <div class="mi-stat-val" id="m-points">1</div>
+        </div>
+        <div class="mi-stat">
+            <div class="mi-stat-label">Coordination No.</div>
+            <div class="mi-stat-val" id="m-coord">6</div>
+        </div>
+        <div class="mi-stat">
+            <div class="mi-stat-label">Bravais Symbol</div>
+            <div class="mi-stat-val" id="m-symbol">P</div>
+        </div>
+        <div class="mi-stat">
+            <div class="mi-stat-label">Real Example</div>
+            <div class="mi-stat-val" id="m-example" style="font-size:0.8rem;">Po</div>
+        </div>
+    </div>
+    <div class="mi-params">
+        <div>
+            <div class="mi-param-key">Axes</div>
+            <div class="mi-param-val" id="m-axes">a = b = c</div>
+        </div>
+        <div>
+            <div class="mi-param-key">Angles</div>
+            <div class="mi-param-val" id="m-angles">α = β = γ = 90°</div>
+        </div>
+    </div>
+</div>
+
+<!-- MOBILE CREDITS -->
+<div id="mobile-credits">
+    <img src="../dr-varun-photo.png" alt="Dr. A. Varun">
+    <div>
+        <div class="mc-name">Dr. A. Varun</div>
+        <div class="mc-detail">Associate Professor & Head, Dept. of Mechanical Engg., BVRIT</div>
     </div>
 </div>
 
@@ -669,6 +758,8 @@ class BravlatSim {
         this.curLat = lat;
         this.curIdx = ALL.indexOf(lat);
         document.querySelectorAll('.lat-btn').forEach(b => b.classList.toggle('active', b.innerHTML===lat.short));
+
+        // Desktop info panel
         document.getElementById('info-title').innerText   = lat.name;
         document.getElementById('info-system').innerText  = 'Crystal System: ' + lat.system;
         document.getElementById('info-desc').innerText    = lat.desc;
@@ -679,6 +770,18 @@ class BravlatSim {
         document.getElementById('p-axes').innerText       = lat.axes;
         document.getElementById('p-angles').innerText     = lat.angles;
         document.getElementById('badge-system').innerText = lat.system;
+
+        // Mobile info strip
+        document.getElementById('m-title').innerText   = lat.name;
+        document.getElementById('m-system').innerText  = 'Crystal System: ' + lat.system;
+        document.getElementById('m-desc').innerText    = lat.desc;
+        document.getElementById('m-points').innerText  = lat.points;
+        document.getElementById('m-coord').innerText   = lat.coord;
+        document.getElementById('m-symbol').innerText  = lat.symbol;
+        document.getElementById('m-example').innerText = lat.example;
+        document.getElementById('m-axes').innerText    = lat.axes;
+        document.getElementById('m-angles').innerText  = lat.angles;
+
         this.rebuild();
     }
 
