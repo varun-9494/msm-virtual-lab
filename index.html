@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Lab - Material Science & Metallurgy</title>
+    
+    <!-- Link to our CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HEADER SECTION -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="bvrit-logo.png" alt="BVRIT Logo" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-title">Virtual Laboratory</span>
+                        <span class="logo-subtitle">Material Science & Metallurgy</span>
+                    </div>
+                </div>
+                
+                <nav class="nav-menu" id="navMenu">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#experiments" class="nav-link">Experiments</a>
+                    <a href="#objectives" class="nav-link">Objectives</a>
+                    <a href="#instructions" class="nav-link">Instructions</a>
+                    <a href="#progress" class="nav-link">Progress</a>
+                    <a href="#resources" class="nav-link">Resources</a>
+                </nav>
+                
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Virtual Laboratory</h1>
+                <h2 class="hero-subtitle">Material Science and Metallurgy</h2>
+                <div class="course-info">
+                    <span class="course-code">R25 A72C1</span>
+                    <span class="separator">|</span>
+                    <span>B.Tech Mechanical Engineering</span>
+                    <span class="separator">|</span>
+                    <span>I Year II Semester</span>
+                </div>
+                <p class="tagline">
+                    <i class="fas fa-atom"></i>
+                    Interactive Simulations for Engineering Materials Education
+                </p>
+                <div class="hero-actions">
+                    <a href="#experiments" class="btn btn-primary">Start Learning</a>
+                    <a href="#instructions" class="btn btn-secondary">How It Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTRODUCTION SECTION -->
+    <section class="introduction">
+        <div class="container">
+            <div class="intro-content">
+                <p class="intro-text">
+                    This virtual laboratory provides <strong>interactive simulations</strong> to understand 
+                    crystal structures, phase diagrams, heat treatment processes, and material properties.
+                </p>
+                <p class="intro-text" style="font-size: 0.95rem; margin-top: 15px;">
+                    <i class="fas fa-university"></i>
+                    Department of Mechanical Engineering | B. V. Raju Institute of Technology
+                </p>
+                <div class="philosophy">
+                    <i class="fas fa-lightbulb"></i>
+                    <span><strong>Learn by Doing:</strong> Visualize → Simulate → Analyze</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIMENTS SECTION (NOW BEFORE OBJECTIVES) -->
+    <section class="experiments" id="experiments">
+        <div class="container">
+            <h2 class="section-title">Experiments by Unit</h2>
+            <p class="section-subtitle">Click on any unit to view experiments</p>
+            
+            <!-- UNIT 1 -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit('unit1')">
+                    <div class="unit-info">
+                        <h3>
+                            <i class="fas fa-atom"></i>
+                            UNIT-I: Crystal Structure & Imperfections
+                        </h3>
+                        <span class="experiment-count">4 Experiments</span>
+                    </div>
+                    <i class="fas fa-chevron-down unit-toggle" id="unit1-toggle"></i>
+                </div>
+                <div class="unit-content" id="unit1">
+                    <div class="experiment-list">
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 1 – CRYSTAVIZ: 3D Crystal Structure Visualizer</h4>
+                                <p>Interactive visualization of SC, FCC, BCC, and HCP crystal structures</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                                <div style="margin-top: 8px; padding: 8px 12px; background: rgba(255, 215, 0, 0.1); border-left: 3px solid #ffd700; border-radius: 4px;">
+                                    <p style="margin: 0; font-size: 0.85rem; color: #ffd700;">
+                                        <i class="fas fa-star"></i> <strong>Developed by:</strong> Hemanth Sagar Reddy (25211A0329)
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="experiments/experiment-1.html" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 2 – Atomic Packing Factor Calculator</h4>
+                                <p>Calculate and compare APF for different structures</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 3 – Point Defects Simulator</h4>
+                                <p>Explore vacancies, interstitials, and substitutional defects</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 4 – Strengthening Mechanisms Simulator</h4>
+                                <p>Compare grain size, solid solution, and strain hardening</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT 2 -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit('unit2')">
+                    <div class="unit-info">
+                        <h3>
+                            <i class="fas fa-project-diagram"></i>
+                            UNIT-II: Solid Solutions & Phase Diagrams
+                        </h3>
+                        <span class="experiment-count">4 Experiments</span>
+                    </div>
+                    <i class="fas fa-chevron-down unit-toggle" id="unit2-toggle"></i>
+                </div>
+                <div class="unit-content" id="unit2">
+                    <div class="experiment-list">
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 5 – Binary Phase Diagram Tool</h4>
+                                <p>Build and interpret binary phase diagrams</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 6 – Fe–Fe₃C Phase Diagram Explorer</h4>
+                                <p>Navigate the iron-carbon diagram</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 7 – Lever Rule Calculator</h4>
+                                <p>Apply lever rule to calculate phase fractions</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 8 – Pb–Sn Phase Diagram Case Study</h4>
+                                <p>Analyze eutectic systems using Pb-Sn</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT 3 -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit('unit3')">
+                    <div class="unit-info">
+                        <h3>
+                            <i class="fas fa-temperature-high"></i>
+                            UNIT-III: Heat Treatment & Cooling
+                        </h3>
+                        <span class="experiment-count">4 Experiments</span>
+                    </div>
+                    <i class="fas fa-chevron-down unit-toggle" id="unit3-toggle"></i>
+                </div>
+                <div class="unit-content" id="unit3">
+                    <div class="experiment-list">
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 9 – Heat Treatment Simulator</h4>
+                                <p>Simulate annealing, hardening, tempering</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 10 – Surface Hardening Methods</h4>
+                                <p>Explore carburizing, nitriding methods</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 11 – Martensite Formation</h4>
+                                <p>Understand diffusionless transformation</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 12 – Austempering & Martempering</h4>
+                                <p>Learn specialized heat treatment</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEARNING OBJECTIVES (NOW AFTER EXPERIMENTS) -->
+    <section class="learning-objectives" id="objectives">
+        <div class="container">
+            <h2 class="section-title">Learning Objectives</h2>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <div class="objective-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Crystal Structures</h3>
+                </div>
+                
+                <div class="objective-card">
+                    <div class="objective-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Phase Diagrams</h3>
+                </div>
+                
+                <div class="objective-card">
+                    <div class="objective-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Heat Treatment</h3>
+                </div>
+                
+                <div class="objective-card">
+                    <div class="objective-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Material Selection</h3>
+                </div>
+                
+                <div class="objective-card">
+                    <div class="objective-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>Defects Analysis</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>B. V. Raju Institute of Technology</h3>
+                    <p>Vishnupur, Narsapur</p>
+                    <p>Medak District – 502313</p>
+                    <p>Greater Hyderabad, Telangana, India</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-phone"></i> 08458-222000, 222001</p>
+                    <p><i class="fas fa-envelope"></i> info@bvrit.ac.in</p>
+                    <p style="margin-top: 10px;"><i class="fas fa-globe"></i> <a href="https://bvrit.ac.in/mech/" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">Mechanical Engineering Dept.</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Developed By</h3>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <img src="dr-varun-photo.png" alt="Dr. A. Varun" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--orange);">
+                        <div>
+                            <p style="font-size: 1.1rem; margin-bottom: 5px;"><strong>Dr. A. Varun</strong></p>
+                            <p style="font-size: 0.85rem;">Associate Professor &amp; Head</p>
+                        </div>
+                    </div>
+                    <p>Department of Mechanical Engineering</p>
+                    <p><i class="fas fa-envelope"></i> hod.mech@bvrit.ac.in</p>
+                    <p><i class="fas fa-envelope"></i> varun.a@bvrit.ac.in</p>
+                    <p><i class="fas fa-phone"></i> +91 9494226711</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Student Contributor</h3>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <img src="hemanth-photo.png" alt="Hemanth Sagar Reddy" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #ffd700;">
+                        <div>
+                            <p style="font-size: 1.1rem; margin-bottom: 5px;"><strong>Hemanth Sagar Reddy</strong></p>
+                            <p style="font-size: 0.85rem;">Roll No: 25211A0329</p>
+                        </div>
+                    </div>
+                    <p>B.Tech Mechanical Engineering</p>
+                    <p style="margin-top: 8px; font-size: 0.9rem; color: #ffd700;">
+                        <i class="fas fa-code"></i> Developer of CRYSTAVIZ (Experiment 1)
+                    </p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 B. V. Raju Institute of Technology. All rights reserved.</p>
+                <p style="margin-top: 5px; font-size: 0.85rem;">Developed by Dr. A. Varun, Associate Professor &amp; Head, Dept. of Mechanical Engineering</p>
+                <p style="margin-top: 5px; font-size: 0.85rem;">Special thanks to Hemanth Sagar Reddy (25211A0329) for developing CRYSTAVIZ</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/navigation.js"></script>
+
+</body>
+</html>
