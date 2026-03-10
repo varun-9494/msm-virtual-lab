@@ -91,158 +91,215 @@
         </div>
     </section>
 
-    <!-- EXPERIMENTS SECTION -->
+    <!-- EXPERIMENTS SECTION (NOW BEFORE OBJECTIVES) -->
     <section class="experiments" id="experiments">
         <div class="container">
             <h2 class="section-title">Experiments by Unit</h2>
-            <p class="section-subtitle">All experiments listed below — active ones are ready to launch</p>
-
+            <p class="section-subtitle">Click on any unit to view experiments</p>
+            
             <!-- UNIT 1 -->
-            <div class="unit-block">
-                <div class="unit-heading">
-                    <i class="fas fa-atom"></i>
-                    <div>
-                        <h3>UNIT-I: Crystal Structure &amp; Imperfections</h3>
-                        <span class="unit-meta">5 Experiments &nbsp;·&nbsp; <span class="active-badge">2 Active</span></span>
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit('unit1')">
+                    <div class="unit-info">
+                        <h3>
+                            <i class="fas fa-atom"></i>
+                            UNIT-I: Crystal Structure & Imperfections
+                        </h3>
+                        <span class="experiment-count">4 Experiments</span>
                     </div>
+                    <i class="fas fa-chevron-down unit-toggle" id="unit1-toggle"></i>
                 </div>
-                <div class="exp-grid">
-
-                    <!-- ACTIVE -->
-                    <div class="exp-card active">
-                        <div class="exp-num">Exp 1</div>
-                        <div class="exp-body">
-                            <h4>BRAVLAT: Bravais Lattice Explorer</h4>
-                            <p>Interactive 3D exploration of all 14 Bravais Lattices across 7 crystal systems</p>
-                            <div class="exp-tags">
-                                <span class="tag tag-green"><i class="fas fa-circle"></i> Active</span>
-                                <span class="tag"><i class="far fa-clock"></i> 15–20 min</span>
+                <div class="unit-content" id="unit1">
+                    <div class="experiment-list">
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 1 – BRAVLAT: Bravais Lattice Explorer</h4>
+                                <p>Interactive 3D exploration of all 14 Bravais Lattices across 7 crystal systems</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                                <div style="margin-top: 8px; padding: 8px 12px; background: rgba(0, 201, 167, 0.1); border-left: 3px solid #00c9a7; border-radius: 4px;">
+                                    <p style="margin: 0; font-size: 0.85rem; color: #00c9a7;">
+                                        <i class="fas fa-atom"></i> <strong>Topic:</strong> Lattice Structures & Bravais Lattices
+                                    </p>
+                                </div>
                             </div>
+                            <a href="experiments/experiment-1.html" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
-                        <a href="experiments/experiment-1.html" class="btn btn-start">Start <i class="fas fa-arrow-right"></i></a>
-                    </div>
 
-                    <!-- ACTIVE -->
-                    <div class="exp-card active">
-                        <div class="exp-num">Exp 2</div>
-                        <div class="exp-body">
-                            <h4>CRYSTAVIZ: 3D Crystal Structure Visualizer</h4>
-                            <p>Interactive visualization of SC, FCC, BCC, and HCP crystal structures</p>
-                            <div class="exp-tags">
-                                <span class="tag tag-green"><i class="fas fa-circle"></i> Active</span>
-                                <span class="tag"><i class="far fa-clock"></i> 15–20 min</span>
-                                <span class="tag tag-gold"><i class="fas fa-star"></i> Hemanth Sagar Reddy</span>
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 2 – CRYSTAVIZ: 3D Crystal Structure Visualizer</h4>
+                                <p>Interactive visualization of SC, FCC, BCC, and HCP crystal structures</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                                <div style="margin-top: 8px; padding: 8px 12px; background: rgba(255, 215, 0, 0.1); border-left: 3px solid #ffd700; border-radius: 4px;">
+                                    <p style="margin: 0; font-size: 0.85rem; color: #ffd700;">
+                                        <i class="fas fa-star"></i> <strong>Developed by:</strong> Hemanth Sagar Reddy (25211A0329)
+                                    </p>
+                                </div>
                             </div>
+                            <a href="experiments/experiment-2.html" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
-                        <a href="experiments/experiment-2.html" class="btn btn-start">Start <i class="fas fa-arrow-right"></i></a>
-                    </div>
 
-                    <!-- INACTIVE -->
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 3</div>
-                        <div class="exp-body">
-                            <h4>Atomic Packing Factor Calculator</h4>
-                            <p>Calculate and compare APF for different crystal structures</p>
-                            <div class="exp-tags">
-                                <span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span>
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 3 – Atomic Packing Factor Calculator</h4>
+                                <p>Calculate and compare APF for different structures</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
                             </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 4</div>
-                        <div class="exp-body">
-                            <h4>Point Defects Simulator</h4>
-                            <p>Explore vacancies, interstitials, and substitutional defects</p>
-                            <div class="exp-tags">
-                                <span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 4 – Point Defects Simulator</h4>
+                                <p>Explore vacancies, interstitials, and substitutional defects</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
                             </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 5</div>
-                        <div class="exp-body">
-                            <h4>Strengthening Mechanisms Simulator</h4>
-                            <p>Compare grain size, solid solution, and strain hardening</p>
-                            <div class="exp-tags">
-                                <span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 5 – Strengthening Mechanisms Simulator</h4>
+                                <p>Compare grain size, solid solution, and strain hardening</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
                             </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
                     </div>
-
                 </div>
             </div>
 
             <!-- UNIT 2 -->
-            <div class="unit-block">
-                <div class="unit-heading">
-                    <i class="fas fa-project-diagram"></i>
-                    <div>
-                        <h3>UNIT-II: Solid Solutions &amp; Phase Diagrams</h3>
-                        <span class="unit-meta">4 Experiments &nbsp;·&nbsp; <span class="coming-badge">Coming Soon</span></span>
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit('unit2')">
+                    <div class="unit-info">
+                        <h3>
+                            <i class="fas fa-project-diagram"></i>
+                            UNIT-II: Solid Solutions & Phase Diagrams
+                        </h3>
+                        <span class="experiment-count">4 Experiments</span>
                     </div>
+                    <i class="fas fa-chevron-down unit-toggle" id="unit2-toggle"></i>
                 </div>
-                <div class="exp-grid">
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 6</div>
-                        <div class="exp-body"><h4>Binary Phase Diagram Tool</h4><p>Build and interpret binary phase diagrams</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 7</div>
-                        <div class="exp-body"><h4>Fe–Fe₃C Phase Diagram Explorer</h4><p>Navigate the iron-carbon diagram interactively</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 8</div>
-                        <div class="exp-body"><h4>Lever Rule Calculator</h4><p>Apply lever rule to calculate phase fractions</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 9</div>
-                        <div class="exp-body"><h4>Pb–Sn Phase Diagram Case Study</h4><p>Analyze eutectic systems using Pb-Sn</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
+                <div class="unit-content" id="unit2">
+                    <div class="experiment-list">
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 5 – Binary Phase Diagram Tool</h4>
+                                <p>Build and interpret binary phase diagrams</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 6 – Fe–Fe₃C Phase Diagram Explorer</h4>
+                                <p>Navigate the iron-carbon diagram</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 7 – Lever Rule Calculator</h4>
+                                <p>Apply lever rule to calculate phase fractions</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 8 – Pb–Sn Phase Diagram Case Study</h4>
+                                <p>Analyze eutectic systems using Pb-Sn</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- UNIT 3 -->
-            <div class="unit-block">
-                <div class="unit-heading">
-                    <i class="fas fa-temperature-high"></i>
-                    <div>
-                        <h3>UNIT-III: Heat Treatment &amp; Cooling</h3>
-                        <span class="unit-meta">4 Experiments &nbsp;·&nbsp; <span class="coming-badge">Coming Soon</span></span>
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit('unit3')">
+                    <div class="unit-info">
+                        <h3>
+                            <i class="fas fa-temperature-high"></i>
+                            UNIT-III: Heat Treatment & Cooling
+                        </h3>
+                        <span class="experiment-count">4 Experiments</span>
                     </div>
+                    <i class="fas fa-chevron-down unit-toggle" id="unit3-toggle"></i>
                 </div>
-                <div class="exp-grid">
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 10</div>
-                        <div class="exp-body"><h4>Heat Treatment Simulator</h4><p>Simulate annealing, hardening, tempering</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 11</div>
-                        <div class="exp-body"><h4>Surface Hardening Methods</h4><p>Explore carburizing, nitriding methods</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 12</div>
-                        <div class="exp-body"><h4>Martensite Formation</h4><p>Understand diffusionless transformation</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
-                    </div>
-                    <div class="exp-card inactive">
-                        <div class="exp-num">Exp 13</div>
-                        <div class="exp-body"><h4>Austempering &amp; Martempering</h4><p>Learn specialized heat treatment processes</p><div class="exp-tags"><span class="tag tag-gray"><i class="fas fa-clock"></i> Coming Soon</span></div></div>
-                        <span class="btn btn-locked"><i class="fas fa-lock"></i> Locked</span>
+                <div class="unit-content" id="unit3">
+                    <div class="experiment-list">
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 9 – Heat Treatment Simulator</h4>
+                                <p>Simulate annealing, hardening, tempering</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 10 – Surface Hardening Methods</h4>
+                                <p>Explore carburizing, nitriding methods</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 11 – Martensite Formation</h4>
+                                <p>Understand diffusionless transformation</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="experiment-item">
+                            <div class="exp-info">
+                                <h4>Experiment 12 – Austempering & Martempering</h4>
+                                <p>Learn specialized heat treatment</p>
+                                <span class="exp-time"><i class="far fa-clock"></i> 15-20 min</span>
+                            </div>
+                            <a href="#" class="btn btn-start">
+                                Start <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -301,12 +358,12 @@
                 <div class="video-card">
                     <div class="video-number">Lecture 1</div>
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/ZiKY6iru4lw" title="Material Science – Lecture 1" frameborder="0"
+                        <iframe src="https://www.youtube.com/embed/ZiKY6iru4lw" title="Material Science – Lecture 1: Introduction to Crystal Lattice Structures" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4><i class="fas fa-play-circle"></i> Introduction to Crystal Lattice Structures</h4>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 1: Introduction to Crystal Lattice Structures</h4>
                         <p>Material Science – Lecture 1</p>
                     </div>
                 </div>
@@ -315,12 +372,12 @@
                 <div class="video-card">
                     <div class="video-number">Lecture 2</div>
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/kdxqKFjmRxo" title="Material Science – Lecture 2" frameborder="0"
+                        <iframe src="https://www.youtube.com/embed/kdxqKFjmRxo" title="Material Science – Lecture 2: Crystal Structures (SC, BCC, FCC)" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4><i class="fas fa-play-circle"></i> Crystal Structures (SC, BCC, FCC)</h4>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 2: Crystal Structures (SC, BCC, FCC)</h4>
                         <p>Material Science – Lecture 2</p>
                     </div>
                 </div>
@@ -329,12 +386,12 @@
                 <div class="video-card">
                     <div class="video-number">Lecture 3</div>
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/DiYs7N_lV7k" title="Material Science – Lecture 3" frameborder="0"
+                        <iframe src="https://www.youtube.com/embed/DiYs7N_lV7k" title="Material Science – Lecture 3: Miller Indices | Crystallographic Planes & Directions" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4><i class="fas fa-play-circle"></i> Miller Indices | Crystallographic Planes & Directions</h4>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 3: Miller Indices | Crystallographic Planes & Directions</h4>
                         <p>Material Science – Lecture 3</p>
                     </div>
                 </div>
@@ -343,12 +400,12 @@
                 <div class="video-card">
                     <div class="video-number">Lecture 4</div>
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/MbrUq4L1iTc" title="Material Science – Lecture 4" frameborder="0"
+                        <iframe src="https://www.youtube.com/embed/MbrUq4L1iTc" title="Material Science – Lecture 4: Mechanism of Crystallization | Nucleation and Crystal Growth" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4><i class="fas fa-play-circle"></i> Mechanism of Crystallization | Nucleation and Crystal Growth</h4>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 4: Mechanism of Crystallization | Nucleation and Crystal Growth</h4>
                         <p>Material Science – Lecture 4</p>
                     </div>
                 </div>
@@ -357,61 +414,139 @@
                 <div class="video-card">
                     <div class="video-number">Lecture 5</div>
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/w4G1tUZ2kJw" title="Material Science – Lecture 5" frameborder="0"
+                        <iframe src="https://www.youtube.com/embed/w4G1tUZ2kJw" title="Material Science – Lecture 5: Crystal Defects | Point, Line, Surface, Volume Defects" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4><i class="fas fa-play-circle"></i> Crystal Defects | Point, Line, Surface, Volume Defects</h4>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 5: Crystal Defects | Point, Line, Surface, Volume Defects</h4>
                         <p>Material Science – Lecture 5</p>
                     </div>
                 </div>
 
-                <!-- Placeholder 6 -->
-                <div class="video-card video-placeholder">
+                <!-- Video 6 -->
+                <div class="video-card">
                     <div class="video-number">Lecture 6</div>
-                    <div class="video-wrapper placeholder-box">
-                        <div class="placeholder-inner">
-                            <i class="fas fa-video" style="font-size:2.5rem; color:#555; margin-bottom:12px;"></i>
-                            <p style="color:#666; font-size:0.9rem;">Coming Soon</p>
-                            <p style="color:#555; font-size:0.8rem; margin-top:6px;">Video will be published at 4:30 PM</p>
-                        </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/3VZ96F4IJuI" title="Material Science – Lecture 6: Solid Solutions | Substitutional & Interstitial" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4 style="color:#666;"><i class="fas fa-clock"></i> Upcoming Lecture</h4>
-                        <p style="color:#555;">Material Science – Lecture 6</p>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 6: Solid Solutions | Substitutional & Interstitial</h4>
+                        <p>Material Science – Lecture 6</p>
                     </div>
                 </div>
 
-                <!-- Placeholder 7 -->
-                <div class="video-card video-placeholder">
+                <!-- Video 7 -->
+                <div class="video-card">
                     <div class="video-number">Lecture 7</div>
-                    <div class="video-wrapper placeholder-box">
-                        <div class="placeholder-inner">
-                            <i class="fas fa-video" style="font-size:2.5rem; color:#555; margin-bottom:12px;"></i>
-                            <p style="color:#666; font-size:0.9rem;">Coming Soon</p>
-                            <p style="color:#555; font-size:0.8rem; margin-top:6px;">Video will be published at 4:30 PM</p>
-                        </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/ttkqGgWEYYw" title="Material Science – Lecture 7: Phase Diagrams | Binary Phase Diagram Basics" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4 style="color:#666;"><i class="fas fa-clock"></i> Upcoming Lecture</h4>
-                        <p style="color:#555;">Material Science – Lecture 7</p>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 7: Phase Diagrams | Binary Phase Diagram Basics</h4>
+                        <p>Material Science – Lecture 7</p>
                     </div>
                 </div>
 
-                <!-- Placeholder 8 -->
-                <div class="video-card video-placeholder">
+                <!-- Video 8 -->
+                <div class="video-card">
                     <div class="video-number">Lecture 8</div>
-                    <div class="video-wrapper placeholder-box">
-                        <div class="placeholder-inner">
-                            <i class="fas fa-video" style="font-size:2.5rem; color:#555; margin-bottom:12px;"></i>
-                            <p style="color:#666; font-size:0.9rem;">Coming Soon</p>
-                            <p style="color:#555; font-size:0.8rem; margin-top:6px;">Video will be published at 4:30 PM</p>
-                        </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/d7mOpveuwXw" title="Material Science – Lecture 8: Binary Phase Diagram – I | Isomorphous Systems" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
-                        <h4 style="color:#666;"><i class="fas fa-clock"></i> Upcoming Lecture</h4>
-                        <p style="color:#555;">Material Science – Lecture 8</p>
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 8: Binary Phase Diagram – I | Isomorphous Systems</h4>
+                        <p>Material Science – Lecture 8</p>
+                    </div>
+                </div>
+
+                <!-- Video 9 -->
+                <div class="video-card">
+                    <div class="video-number">Lecture 9</div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/_ij-iJ4hbk4" title="Material Science – Lecture 9: Binary Phase Diagram – II | Lever Rule & Tie Line Rule |" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 9: Binary Phase Diagram – II | Lever Rule & Tie Line Rule |</h4>
+                        <p>Material Science – Lecture 9</p>
+                    </div>
+                </div>
+
+                <!-- Video 10 -->
+                <div class="video-card">
+                    <div class="video-number">Lecture 10</div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/lu_E1Ui8rU8" title="Material Science – Lecture 10: Binary Phase Diagram – III | Eutectic Phase Diagram" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 10: Binary Phase Diagram – III | Eutectic Phase Diagram</h4>
+                        <p>Material Science – Lecture 10</p>
+                    </div>
+                </div>
+
+                <!-- Video 11 -->
+                <div class="video-card">
+                    <div class="video-number">Lecture 11</div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/2SgfBdbPrxs" title="Material Science – Lecture 11: Iron–Iron Carbide Phase Diagram – I | Introduction" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 11: Iron–Iron Carbide Phase Diagram – I | Introduction</h4>
+                        <p>Material Science – Lecture 11</p>
+                    </div>
+                </div>
+
+                <!-- Video 12 -->
+                <div class="video-card">
+                    <div class="video-number">Lecture 12</div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/SkKvUfs4P6c" title="Material Science – Lecture 12: Iron–Iron Carbide Phase Diagram – II | Invariant Reactions" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 12: Iron–Iron Carbide Phase Diagram – II | Invariant Reactions</h4>
+                        <p>Material Science – Lecture 12</p>
+                    </div>
+                </div>
+
+                <!-- Video 13 -->
+                <div class="video-card">
+                    <div class="video-number">Lecture 13</div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/Y3pBmfoRrtc" title="Material Science – Lecture 13: Carbon Solubility in Iron | Ferrite, Austenite & Cementite" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 13: Carbon Solubility in Iron | Ferrite, Austenite & Cementite</h4>
+                        <p>Material Science – Lecture 13</p>
+                    </div>
+                </div>
+
+                <!-- Video 14 -->
+                <div class="video-card">
+                    <div class="video-number">Lecture 14</div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/IZmAeWj3Qig" title="Material Science – Lecture 14: TTT & CCT Diagrams | Heat Treatment of Steel" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4><i class="fas fa-play-circle"></i> Material Science – Lecture 14: TTT & CCT Diagrams | Heat Treatment of Steel</h4>
+                        <p>Material Science – Lecture 14</p>
                     </div>
                 </div>
 
