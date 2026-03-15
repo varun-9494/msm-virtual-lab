@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 4 - Hume-Rothery Rules Predictor | BVRIT MSM Virtual Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #060d18;
+            --panel: rgba(6,16,32,0.92);
+            --border: rgba(255,255,255,0.07);
+            --cyan: #00d4ff;
+            --gold: #ffc94d;
+            --green: #39e87a;
+            --red: #ff4d6d;
+            --text: #d8eaf8;
+            --muted: #4a6a88;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #0f1720 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: rgba(3,8,18,0.96);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .title-icon {
+            font-size: 2rem;
+            color: var(--cyan);
+            text-shadow: 0 0 20px rgba(0,212,255,0.5);
+        }
+        
+        .title-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            margin: 0;
+        }
+        
+        .title-text p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin: 3px 0 0 0;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            background: var(--cyan);
+            color: var(--bg);
+            border-color: var(--cyan);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 400px;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .panel h2 {
+            font-size: 1.1rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .select-group {
+            margin-bottom: 20px;
+        }
+        
+        .select-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(10,25,47,0.8);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        select:hover, select:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 12px rgba(0,212,255,0.2);
+            outline: none;
+        }
+        
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--cyan);
+            color: var(--bg);
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .analyze-btn:hover {
+            box-shadow: 0 0 25px rgba(0,212,255,0.4);
+            transform: translateY(-2px);
+        }
+        
+        .analyze-btn:active {
+            transform: translateY(0);
+        }
+        
+        .visualization {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+        }
+        
+        .atom-comparison {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 50px;
+            width: 100%;
+            margin: 30px 0;
+        }
+        
+        .atom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .atom-circle {
+            border-radius: 50%;
+            border: 3px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--cyan);
+            font-size: 1.2rem;
+        }
+        
+        .atom-label {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .atom-radius {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+        
+        .unit-cell {
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 30px;
+            background: rgba(255,201,77,0.05);
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .unit-cell-host {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--cyan);
+            opacity: 0.8;
+        }
+        
+        .unit-cell-solute {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.8;
+        }
+        
+        .rules-section {
+            background: rgba(10,25,47,0.6);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .rule {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .rule:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .rule-title {
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .rule-value {
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+        
+        .rule-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+        
+        .status-pass {
+            background: rgba(57,232,122,0.2);
+            color: var(--green);
+            border: 1px solid var(--green);
+        }
+        
+        .status-fail {
+            background: rgba(255,77,109,0.2);
+            color: var(--red);
+            border: 1px solid var(--red);
+        }
+        
+        .status-warning {
+            background: rgba(255,201,77,0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+        
+        .result-box {
+            background: rgba(0,212,255,0.1);
+            border: 2px solid var(--cyan);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 15px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .result-value {
+            color: var(--cyan);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        .solution-type {
+            background: rgba(57,232,122,0.1);
+            border: 2px solid var(--green);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .solution-type-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        
+        .solution-type-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green);
+            letter-spacing: 1px;
+        }
+        
+        .examples {
+            background: rgba(185,122,255,0.05);
+            border: 1px solid rgba(185,122,255,0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .examples-title {
+            font-size: 0.85rem;
+            color: #b97aff;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .example-item {
+            font-size: 0.8rem;
+            color: var(--muted);
+            padding: 5px 0;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .panel {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title">
+                <div class="title-icon">⚛</div>
+                <div class="title-text">
+                    <h1>EXPERIMENT 4</h1>
+                    <p>HUME-ROTHERY RULES PREDICTOR</p>
+                </div>
+            </div>
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Lab
+            </a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-grid">
+            <!-- LEFT PANEL: ELEMENT SELECTION -->
+            <div class="panel">
+                <h2><i class="fas fa-flask"></i> Element Selection</h2>
+                
+                <div class="select-group">
+                    <label class="select-label">Host Element</label>
+                    <select id="hostElement" onchange="updateVisualization()">
+                        <option value="">-- Select Host --</option>
+                        <option value="Fe">Iron (Fe) - BCC</option>
+                        <option value="Cu">Copper (Cu) - FCC</option>
+                        <option value="Ni">Nickel (Ni) - FCC</option>
+                        <option value="Al">Aluminum (Al) - FCC</option>
+                        <option value="Mg">Magnesium (Mg) - HCP</option>
+                        <option value="Cr">Chromium (Cr) - BCC</option>
+                        <option value="Mo">Molybdenum (Mo) - BCC</option>
+                        <option value="W">Tungsten (W) - BCC</option>
+                        <option value="Ag">Silver (Ag) - FCC</option>
+                        <option value="Au">Gold (Au) - FCC</option>
+                    </select>
+                </div>
+                
+                <div class="select-group">
+                    <label class="select-label">Solute Element</label>
+                    <select id="soluteElement" onchange="updateVisualization()">
+                        <option value="">-- Select Solute --</option>
+                    </select>
+                </div>
+                
+                <button class="analyze-btn" onclick="analyzeHumeRothery()">
+                    <i class="fas fa-play"></i> Analyze Rules
+                </button>
+            </div>
+            
+            <!-- MIDDLE PANEL: VISUALIZATION -->
+            <div class="panel">
+                <h2><i class="fas fa-cube"></i> Atomic Structure Visualization</h2>
+                
+                <div class="visualization" id="visualization">
+                    <div style="text-align: center; color: var(--muted); padding: 40px;">
+                        <p>Select elements to begin analysis</p>
+                        <p style="font-size: 0.85rem; margin-top: 10px;">Host element determines crystal structure</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RIGHT PANEL: ANALYSIS RESULTS -->
+            <div class="panel">
+                <h2><i class="fas fa-microscope"></i> Hume-Rothery Analysis</h2>
+                
+                <div id="analysisResults" style="display: none;">
+                    <div class="rules-section" id="rulesDisplay"></div>
+                    
+                    <div class="result-box" id="predictionBox" style="display: none;">
+                        <div class="result-title">Solubility Prediction</div>
+                        <div id="predictionText"></div>
+                    </div>
+                    
+                    <div class="examples" id="examplesBox" style="display: none;">
+                        <div class="examples-title">Real-World Alloys</div>
+                        <div id="examplesText"></div>
+                    </div>
+                </div>
+                
+                <div id="noAnalysisMessage" style="text-align: center; color: var(--muted); padding: 30px;">
+                    <p><i class="fas fa-info-circle"></i></p>
+                    <p style="margin-top: 10px;">Run analysis to see results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Element database with properties
+        const elements = {
+            Fe: {
+                name: 'Iron',
+                atomicRadius: 1.24,
+                crystal: 'BCC',
+                valence: 2,
+                electronegativity: 1.83
+            },
+            Cu: {
+                name: 'Copper',
+                atomicRadius: 1.28,
+                crystal: 'FCC',
+                valence: 1,
+                electronegativity: 1.90
+            },
+            Ni: {
+                name: 'Nickel',
+                atomicRadius: 1.25,
+                crystal: 'FCC',
+                valence: 2,
+                electronegativity: 1.91
+            },
+            Al: {
+                name: 'Aluminum',
+                atomicRadius: 1.43,
+                crystal: 'FCC',
+                valence: 3,
+                electronegativity: 1.61
+            },
+            Mg: {
+                name: 'Magnesium',
+                atomicRadius: 1.60,
+                crystal: 'HCP',
+                valence: 2,
+                electronegativity: 1.31
+            },
+            Cr: {
+                name: 'Chromium',
+                atomicRadius: 1.29,
+                crystal: 'BCC',
+                valence: 2,
+                electronegativity: 1.66
+            },
+            Mo: {
+                name: 'Molybdenum',
+                atomicRadius: 1.39,
+                crystal: 'BCC',
+                valence: 2,
+                electronegativity: 2.16
+            },
+            W: {
+                name: 'Tungsten',
+                atomicRadius: 1.39,
+                crystal: 'BCC',
+                valence: 2,
+                electronegativity: 2.36
+            },
+            Ag: {
+                name: 'Silver',
+                atomicRadius: 1.44,
+                crystal: 'FCC',
+                valence: 1,
+                electronegativity: 1.93
+            },
+            Au: {
+                name: 'Gold',
+                atomicRadius: 1.44,
+                crystal: 'FCC',
+                valence: 3,
+                electronegativity: 2.54
+            },
+            C: {
+                name: 'Carbon',
+                atomicRadius: 0.77,
+                crystal: 'N/A',
+                valence: 4,
+                electronegativity: 2.55
+            },
+            Mn: {
+                name: 'Manganese',
+                atomicRadius: 1.30,
+                crystal: 'BCC',
+                valence: 2,
+                electronegativity: 1.55
+            }
+        };
+        
+        // Solute options based on host element
+        const soluteOptions = {
+            Fe: ['Cu', 'Ni', 'Cr', 'Mn', 'Mo', 'C'],
+            Cu: ['Ni', 'Ag', 'Au', 'Al', 'Zn'],
+            Ni: ['Cu', 'Fe', 'Cr', 'Ag'],
+            Al: ['Cu', 'Si', 'Mg', 'Zn'],
+            Mg: ['Al', 'Zn', 'Cu'],
+            Cr: ['Fe', 'Mo', 'W'],
+            Mo: ['Fe', 'Cr', 'W'],
+            W: ['Fe', 'Mo', 'Cr'],
+            Ag: ['Cu', 'Au', 'Al'],
+            Au: ['Cu', 'Ag', 'Al']
+        };
+        
+        // Real-world alloys
+        const alloyExamples = {
+            'Fe-Cu': 'Copper steel alloys',
+            'Fe-Ni': 'Stainless steel, Invar',
+            'Fe-Cr': 'Stainless steel',
+            'Fe-Mn': 'Manganese steel',
+            'Fe-Mo': 'Tool steel',
+            'Cu-Ni': 'Cupronickel (coins, condenser tubes)',
+            'Cu-Ag': 'Sterling silver',
+            'Cu-Au': 'Gold alloys',
+            'Al-Cu': 'Duralumin (aircraft)',
+            'Al-Mg': 'Magnesium-aluminum alloys',
+            'Ni-Fe': 'Permalloy',
+            'Ag-Au': 'White gold, jewelry'
+        };
+        
+        // Update solute options when host changes
+        document.getElementById('hostElement').addEventListener('change', function() {
+            const host = this.value;
+            const soluteSelect = document.getElementById('soluteElement');
+            soluteSelect.innerHTML = '<option value="">-- Select Solute --</option>';
+            
+            if (host && soluteOptions[host]) {
+                soluteOptions[host].forEach(solute => {
+                    if (elements[solute]) {
+                        const option = document.createElement('option');
+                        option.value = solute;
+                        option.textContent = `${elements[solute].name} (${solute})`;
+                        soluteSelect.appendChild(option);
+                    }
+                });
+            }
+        });
+        
+        function updateVisualization() {
+            const host = document.getElementById('hostElement').value;
+            if (!host) return;
+            
+            const hostData = elements[host];
+            const vizDiv = document.getElementById('visualization');
+            
+            let html = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 0.9rem; color: var(--muted); margin-bottom: 10px;">
+                        Crystal Structure: ${hostData.crystal}
+                    </div>
+                </div>
+                
+                <div style="font-size: 2rem; color: var(--cyan); margin: 20px 0; font-weight: 700;">
+                    ${host}
+                </div>
+                
+                <div style="font-size: 0.85rem; color: var(--muted); text-align: center; line-height: 1.8;">
+                    <div>Atomic Radius: ${hostData.atomicRadius} Å</div>
+                    <div>Electronegativity: ${hostData.electronegativity}</div>
+                    <div>Valence Electrons: ${hostData.valence}</div>
+                </div>
+            `;
+            
+            vizDiv.innerHTML = html;
+        }
+        
+        function analyzeHumeRothery() {
+            const host = document.getElementById('hostElement').value;
+            const solute = document.getElementById('soluteElement').value;
+            
+            if (!host || !solute) {
+                alert('Please select both host and solute elements');
+                return;
+            }
+            
+            const hostData = elements[host];
+            const soluteData = elements[solute];
+            
+            // Calculate Hume-Rothery Rules
+            const atomSizeDiff = Math.abs((soluteData.atomicRadius - hostData.atomicRadius) / hostData.atomicRadius) * 100;
+            const structureMatch = hostData.crystal === soluteData.crystal;
+            const electronegativityDiff = Math.abs(soluteData.electronegativity - hostData.electronegativity);
+            const valenceDiff = Math.abs(soluteData.valence - hostData.valence);
+            
+            // Determine solubility
+            let solubility = 'HIGH';
+            let solubilityPercent = 100;
+            
+            if (atomSizeDiff > 15) {
+                solubility = 'LIMITED';
+                solubilityPercent = 50;
+            }
+            if (!structureMatch) {
+                solubility = 'LIMITED';
+                solubilityPercent = Math.max(solubilityPercent * 0.7, 30);
+            }
+            if (electronegativityDiff > 1.0) {
+                solubility = 'LIMITED';
+                solubilityPercent = Math.max(solubilityPercent * 0.6, 20);
+            }
+            
+            // Determine solution type
+            // Interstitial: solute radius must be < 1 Å (0.59 Å to be safe)
+            // AND size difference > 15%
+            let solutionType = 'SUBSTITUTIONAL';
+            
+            // Check for interstitial conditions
+            if (soluteData.atomicRadius < 1.0 && atomSizeDiff > 15) {
+                solutionType = 'INTERSTITIAL (small solute atom)';
+            } else if (atomSizeDiff < 15) {
+                solutionType = 'SUBSTITUTIONAL (similar size)';
+            }
+            
+            // Special cases
+            if (solute === 'C' && host === 'Fe') solutionType = 'INTERSTITIAL (Carbon in Iron)';
+            
+            // Build results HTML
+            let rulesHtml = `
+                <div class="rule">
+                    <div class="rule-title">Rule 1: Atomic Size Difference</div>
+                    <div class="rule-value">${atomSizeDiff.toFixed(1)}%</div>
+                    <span class="rule-status ${atomSizeDiff < 15 ? 'status-pass' : 'status-warning'}">
+                        ${atomSizeDiff < 15 ? '✓ FAVORABLE (< 15%)' : '⚠ UNFAVORABLE (> 15%)'}
+                    </span>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 5px;">
+                        Small differences favor substitution; large differences may favor interstitial
+                    </div>
+                </div>
+                
+                <div class="rule">
+                    <div class="rule-title">Rule 1B: Interstitial Atom Radius</div>
+                    <div class="rule-value">${soluteData.atomicRadius.toFixed(2)} Å</div>
+                    <span class="rule-status ${soluteData.atomicRadius < 1.0 ? 'status-pass' : 'status-fail'}">
+                        ${soluteData.atomicRadius < 1.0 ? '✓ SMALL (< 1.0 Å)' : '✗ TOO LARGE (≥ 1.0 Å)'}
+                    </span>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 5px;">
+                        Interstitial solutes MUST be very small atoms (C, N, H). Must be < 1 Å radius!
+                    </div>
+                </div>
+                
+                <div class="rule">
+                    <div class="rule-title">Rule 2: Crystal Structure Match</div>
+                    <div class="rule-value">${structureMatch ? '✓ MATCH' : '✗ MISMATCH'}</div>
+                    <span class="rule-status ${structureMatch ? 'status-pass' : 'status-fail'}">
+                        ${structureMatch ? '✓ FAVORABLE' : '✗ UNFAVORABLE'}
+                    </span>
+                </div>
+                
+                <div class="rule">
+                    <div class="rule-title">Rule 3: Electronegativity Difference</div>
+                    <div class="rule-value">${electronegativityDiff.toFixed(2)} eV</div>
+                    <span class="rule-status ${electronegativityDiff < 0.5 ? 'status-pass' : electronegativityDiff < 1.0 ? 'status-warning' : 'status-fail'}">
+                        ${electronegativityDiff < 0.5 ? '✓ FAVORABLE' : electronegativityDiff < 1.0 ? '⚠ MODERATE' : '✗ UNFAVORABLE (> 1.0)'}
+                    </span>
+                </div>
+                
+                <div class="rule">
+                    <div class="rule-title">Rule 4: Valence Electron Compatibility</div>
+                    <div class="rule-value">Diff: ${valenceDiff}</div>
+                    <span class="rule-status ${valenceDiff === 0 ? 'status-pass' : 'status-warning'}">
+                        ${valenceDiff === 0 ? '✓ SAME VALENCE' : '⚠ DIFFERENT VALENCE'}
+                    </span>
+                </div>
+                
+                <div class="rule">
+                    <div class="rule-title">Interstitial Alloy Rule: Solute Radius < 1.0 Å</div>
+                    <div class="rule-value">${soluteData.atomicRadius.toFixed(2)} Å</div>
+                    <span class="rule-status ${soluteData.atomicRadius < 1.0 ? 'status-pass' : 'status-fail'}">
+                        ${soluteData.atomicRadius < 1.0 ? '✓ CAN BE INTERSTITIAL' : '✗ MUST BE SUBSTITUTIONAL'}
+                    </span>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 5px;">
+                        <strong>Interstitial Criterion:</strong> Only atoms with radius < 1.0 Å can form interstitial solid solutions. 
+                        Examples: C (0.77Å), N (0.71Å), H (0.53Å). Larger atoms are substitutional.
+                    </div>
+                </div>
+            `;
+            
+            // Determine if interstitial is possible (radius < 1.0 Å)
+            const isInterstitialPossible = soluteData.atomicRadius < 1.0;
+            const interstitialStatus = isInterstitialPossible 
+                ? '✓ POSSIBLE (radius < 1.0 Å)' 
+                : '✗ NOT POSSIBLE (radius ≥ 1.0 Å)';
+            const interstitialStatusClass = isInterstitialPossible ? 'status-pass' : 'status-fail';
+            
+            let predictionHtml = `
+                <div class="result-item">
+                    <span class="result-label">Solubility Level:</span>
+                    <span class="result-value">${solubility}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Estimated Max Solubility:</span>
+                    <span class="result-value">${solubilityPercent.toFixed(0)}%</span>
+                </div>
+                <div class="solution-type">
+                    <div class="solution-type-label">Solution Type:</div>
+                    <div class="solution-type-value">${solutionType}</div>
+                </div>
+                <div style="background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.5); border-radius: 6px; padding: 12px; margin-top: 15px;">
+                    <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Interstitial Alloy Rule Analysis</div>
+                    <div class="result-item" style="border: none; padding: 0; margin-bottom: 8px;">
+                        <span class="result-label">Solute Radius:</span>
+                        <span class="result-value">${soluteData.atomicRadius.toFixed(2)} Å</span>
+                    </div>
+                    <span class="rule-status ${interstitialStatusClass}">
+                        ${interstitialStatus}
+                    </span>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 8px; line-height: 1.4;">
+                        <strong>Rule:</strong> Interstitial solid solutions ONLY form when solute radius < 1.0 Å (1 Angstrom). 
+                        Common interstitials: C, N, H in metals. Substitutional atoms are typically ≥ 1.0 Å.
+                    </div>
+                </div>
+            `;
+            
+            let examplesHtml = '';
+            const alloyKey = `${host}-${solute}`;
+            const reverseAlloyKey = `${solute}-${host}`;
+            
+            if (alloyExamples[alloyKey]) {
+                examplesHtml = `<div class="example-item">• ${alloyExamples[alloyKey]}</div>`;
+            }
+            if (alloyExamples[reverseAlloyKey]) {
+                examplesHtml += `<div class="example-item">• ${alloyExamples[reverseAlloyKey]}</div>`;
+            }
+            
+            document.getElementById('rulesDisplay').innerHTML = rulesHtml;
+            document.getElementById('predictionText').innerHTML = predictionHtml;
+            document.getElementById('predictionBox').style.display = 'block';
+            
+            if (examplesHtml) {
+                document.getElementById('examplesText').innerHTML = examplesHtml;
+                document.getElementById('examplesBox').style.display = 'block';
+            } else {
+                document.getElementById('examplesBox').style.display = 'none';
+            }
+            
+            document.getElementById('analysisResults').style.display = 'block';
+            document.getElementById('noAnalysisMessage').style.display = 'none';
+            
+            // Update visualization
+            updateVisualization();
+        }
+    </script>
+</body>
+</html>

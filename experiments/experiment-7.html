@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 7 - Iron-Carbon Phase Diagram Master | BVRIT MSM Virtual Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #060d18;
+            --panel: rgba(6,16,32,0.92);
+            --border: rgba(255,255,255,0.07);
+            --cyan: #00d4ff;
+            --gold: #ffc94d;
+            --green: #39e87a;
+            --purple: #b97aff;
+            --text: #d8eaf8;
+            --muted: #4a6a88;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #0f1720 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: rgba(3,8,18,0.96);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .title-icon {
+            font-size: 2rem;
+            color: var(--purple);
+            text-shadow: 0 0 20px rgba(185,122,255,0.5);
+        }
+        
+        .title-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        
+        .title-text p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            background: var(--cyan);
+            color: var(--bg);
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .panel h2 {
+            font-size: 1rem;
+            color: var(--purple);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        .control-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        select, input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            background: rgba(10,25,47,0.8);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        select:focus, input[type="range"]:focus {
+            border-color: var(--purple);
+            outline: none;
+        }
+        
+        .slider-value {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background: var(--purple);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            box-shadow: 0 0 15px rgba(185,122,255,0.4);
+            transform: translateY(-2px);
+        }
+        
+        #feC_Diagram {
+            width: 100%;
+            height: 700px;
+            background: rgba(10,25,47,0.4);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .info-section {
+            background: rgba(185,122,255,0.1);
+            border: 1px solid var(--purple);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .info-title {
+            color: var(--purple);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: var(--muted);
+        }
+        
+        .info-value {
+            color: var(--purple);
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .phase-card {
+            background: rgba(10,25,47,0.6);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+        }
+        
+        .phase-name {
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+        
+        .phase-desc {
+            color: var(--muted);
+            line-height: 1.4;
+        }
+        
+        .critical-temps {
+            background: rgba(0,212,255,0.1);
+            border: 1px solid var(--cyan);
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
+        
+        .temp-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .temp-item:last-child {
+            border-bottom: none;
+        }
+        
+        .temp-name {
+            color: var(--muted);
+        }
+        
+        .temp-value {
+            color: var(--cyan);
+            font-weight: 700;
+        }
+        
+        @media (max-width: 1400px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title">
+                <div class="title-icon">⚙</div>
+                <div class="title-text">
+                    <h1>EXPERIMENT 7</h1>
+                    <p>IRON-CARBON PHASE DIAGRAM MASTER</p>
+                </div>
+            </div>
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Lab
+            </a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-grid">
+            <!-- LEFT PANEL: CONTROLS -->
+            <div class="panel">
+                <h2><i class="fas fa-sliders-h"></i> Explorer</h2>
+                
+                <div class="control-group">
+                    <label class="control-label">Carbon Content (wt%)</label>
+                    <input type="range" id="carbonSlider" min="0" max="6.7" step="0.1" value="0.8" onchange="updateAnalysis()">
+                    <div class="slider-value">
+                        <span>0%</span>
+                        <span id="carbonValue">0.8%</span>
+                        <span>6.7%</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Temperature (°C)</label>
+                    <input type="range" id="tempSlider" min="20" max="1600" step="10" value="700" onchange="updateAnalysis()">
+                    <div class="slider-value">
+                        <span>20°C</span>
+                        <span id="tempValue">700°C</span>
+                        <span>1600°C</span>
+                    </div>
+                </div>
+                
+                <button onclick="markPoint()"><i class="fas fa-plus-circle"></i> Mark Point</button>
+                <button onclick="resetAnalysis()" style="background: var(--gold); color: var(--bg);"><i class="fas fa-redo"></i> Reset</button>
+            </div>
+            
+            <!-- MIDDLE PANEL: FE-C DIAGRAM -->
+            <div class="panel">
+                <h2><i class="fas fa-chart-line"></i> Fe-C Phase Diagram (0-6.7% C)</h2>
+                <canvas id="feC_Diagram"></canvas>
+                <div style="font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 10px;">
+                    Drag to select point or use sliders on the left
+                </div>
+            </div>
+            
+            <!-- RIGHT PANEL: ANALYSIS -->
+            <div class="panel">
+                <h2><i class="fas fa-microscope"></i> Phase Analysis</h2>
+                
+                <div class="info-section">
+                    <div class="info-title">Current Condition</div>
+                    <div class="info-row">
+                        <span class="info-label">Carbon:</span>
+                        <span class="info-value" id="displayCarbon">0.8%</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Temperature:</span>
+                        <span class="info-value" id="displayTemp">700°C</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Region:</span>
+                        <span class="info-value" id="displayRegion">Pearlite</span>
+                    </div>
+                </div>
+                
+                <div id="phasesDisplay"></div>
+                
+                <div class="critical-temps">
+                    <div style="font-weight: 700; color: var(--cyan); margin-bottom: 10px;">Critical Temperatures</div>
+                    <div class="temp-item">
+                        <span class="temp-name">A1 (Pearlite):</span>
+                        <span class="temp-value">727°C</span>
+                    </div>
+                    <div class="temp-item">
+                        <span class="temp-name">A3 (γ to α):</span>
+                        <span class="temp-value" id="a3Temp">—</span>
+                    </div>
+                    <div class="temp-item">
+                        <span class="temp-name">Acm (γ bound):</span>
+                        <span class="temp-value" id="acmTemp">—</span>
+                    </div>
+                    <div class="temp-item">
+                        <span class="temp-name">Eutectic:</span>
+                        <span class="temp-value">1147°C</span>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(185,122,255,0.1); border: 1px solid var(--purple); border-radius: 6px; padding: 12px; font-size: 0.8rem; margin-top: 20px;">
+                    <p><strong>Tip:</strong> Different carbon contents create different phases. Steel (< 2% C) vs Cast Iron (> 2% C)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let canvas, ctx;
+        
+        // Critical temperatures for Fe-C system
+        const a1_Temp = 727; // Pearlite formation
+        const a3_BaseTemp = 912; // Base A3 temperature
+        const acm_BaseTemp = 1147; // Base Acm temperature
+        
+        function initCanvas() {
+            canvas = document.getElementById('feC_Diagram');
+            ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Mouse interaction
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                handleMouseMove(x, y);
+            });
+            
+            updateAnalysis();
+        }
+        
+        function drawFeCDiagram() {
+            const padding = 80;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            
+            // Background
+            ctx.fillStyle = 'rgba(10,25,47,0.4)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Axes
+            ctx.strokeStyle = 'rgba(212,212,212,0.4)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Grid
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (i * width / 10);
+                const y = padding + (i * height / 10);
+                
+                ctx.beginPath();
+                ctx.moveTo(x, canvas.height - padding);
+                ctx.lineTo(x, canvas.height - padding + 5);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(padding - 5, y);
+                ctx.lineTo(padding, y);
+                ctx.stroke();
+            }
+            
+            // Phase boundaries
+            ctx.strokeStyle = 'var(--purple)';
+            ctx.lineWidth = 3;
+            
+            // Liquidus line
+            ctx.beginPath();
+            for (let c = 0; c <= 6.7; c += 0.1) {
+                const temp = c < 4.3 ? 1550 - (c * 35) : 1147 + ((4.3 - c) * 80);
+                const x = padding + (c / 6.7) * width;
+                const y = canvas.height - padding - ((temp - 20) / 1580) * height;
+                if (c === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            // Solidus line
+            ctx.strokeStyle = 'rgba(185,122,255,0.6)';
+            ctx.beginPath();
+            for (let c = 0; c <= 6.7; c += 0.1) {
+                const temp = a1_Temp;
+                const x = padding + (c / 6.7) * width;
+                const y = canvas.height - padding - ((temp - 20) / 1580) * height;
+                if (c === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            // A3 line
+            ctx.strokeStyle = 'rgba(57,232,122,0.6)';
+            ctx.beginPath();
+            for (let c = 0; c <= 2; c += 0.1) {
+                const temp = a3_BaseTemp - (c * 30);
+                const x = padding + (c / 6.7) * width;
+                const y = canvas.height - padding - ((temp - 20) / 1580) * height;
+                if (c === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            // Acm line
+            ctx.strokeStyle = 'rgba(255,201,77,0.6)';
+            ctx.beginPath();
+            for (let c = 0.8; c <= 6.7; c += 0.1) {
+                const temp = acm_BaseTemp + ((c - 0.8) * 20);
+                const x = padding + (c / 6.7) * width;
+                const y = canvas.height - padding - ((temp - 20) / 1580) * height;
+                if (c === 0.8) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            // Phase labels
+            ctx.fillStyle = 'rgba(185,122,255,0.3)';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('L', canvas.width / 2, padding + 40);
+            ctx.fillText('γ (Austenite)', canvas.width / 2, padding + 120);
+            ctx.fillText('α + γ', canvas.width / 4, canvas.height - padding - 100);
+            ctx.fillText('Pearlite', canvas.width / 2, canvas.height - padding - 50);
+            
+            // Axes labels
+            ctx.fillStyle = '#d8eaf8';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Carbon Content (wt%)', canvas.width / 2, canvas.height - 20);
+            
+            ctx.save();
+            ctx.translate(20, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.textAlign = 'center';
+            ctx.fillText('Temperature (°C)', 0, 0);
+            ctx.restore();
+        }
+        
+        function handleMouseMove(x, y) {
+            const padding = 80;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            
+            if (x > padding && x < canvas.width - padding && 
+                y > padding && y < canvas.height - padding) {
+                const carbon = ((x - padding) / width) * 6.7;
+                const temp = 20 + ((canvas.height - padding - y) / height) * 1580;
+                
+                document.getElementById('carbonSlider').value = carbon.toFixed(1);
+                document.getElementById('tempSlider').value = temp.toFixed(0);
+                updateAnalysis();
+            }
+        }
+        
+        function updateAnalysis() {
+            const carbon = parseFloat(document.getElementById('carbonSlider').value);
+            const temp = parseFloat(document.getElementById('tempSlider').value);
+            
+            document.getElementById('carbonValue').textContent = carbon.toFixed(2) + '%';
+            document.getElementById('tempValue').textContent = temp.toFixed(0) + '°C';
+            document.getElementById('displayCarbon').textContent = carbon.toFixed(2) + '%';
+            document.getElementById('displayTemp').textContent = temp.toFixed(0) + '°C';
+            
+            // Determine phases and region
+            let region = 'Unknown';
+            let phases = [];
+            let classification = '';
+            
+            if (carbon < 2) {
+                classification = 'STEEL';
+            } else if (carbon < 4.3) {
+                classification = 'Cast Iron (Hypoeutectic)';
+            } else {
+                classification = 'Cast Iron (Hypereutectic)';
+            }
+            
+            const a3Temp = a3_BaseTemp - (carbon * 30);
+            const acmTemp = acm_BaseTemp + ((carbon - 0.8) * 20);
+            
+            document.getElementById('a3Temp').textContent = carbon < 2 ? a3Temp.toFixed(0) + '°C' : '—';
+            document.getElementById('acmTemp').textContent = carbon > 0.8 ? acmTemp.toFixed(0) + '°C' : '—';
+            
+            // Phase determination
+            if (temp > 1147) {
+                region = 'Liquid';
+                phases = ['Liquid (L)'];
+            } else if (temp > a3Temp && carbon < 2) {
+                region = 'Austenite (γ)';
+                phases = ['Austenite (γ) - FCC, Hard at high temp'];
+            } else if (temp > 727 && carbon < 0.8) {
+                region = 'Ferrite + Austenite';
+                phases = ['Ferrite (α)', 'Austenite (γ)'];
+            } else if (temp === 727) {
+                region = 'Pearlite Formation';
+                phases = ['Pearlite (Ferrite + Cementite)'];
+            } else {
+                region = 'Ferrite + Pearlite';
+                phases = ['Ferrite (α)', 'Pearlite (Ferrite + Cementite)'];
+            }
+            
+            // Phase info display
+            let phasesHtml = '';
+            const phaseInfo = {
+                'Liquid (L)': 'Molten metal phase',
+                'Austenite (γ) - FCC, Hard at high temp': 'FCC structure, high carbon solubility (2.11% max)',
+                'Ferrite (α)': 'BCC structure, soft and ductile, low carbon (0.02% max)',
+                'Pearlite (Ferrite + Cementite)': 'Lamellar structure formed at 727°C',
+                'Cementite (Fe₃C)': 'Intermetallic compound, extremely hard and brittle'
+            };
+            
+            phases.forEach(phase => {
+                const basePhase = phase.split('(')[0].trim();
+                const desc = phaseInfo[phase] || phaseInfo[basePhase] || '';
+                phasesHtml += `
+                    <div class="phase-card">
+                        <div class="phase-name">✓ ${phase}</div>
+                        <div class="phase-desc">${desc}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('phasesDisplay').innerHTML = phasesHtml;
+            document.getElementById('displayRegion').textContent = region + ' [' + classification + ']';
+            
+            drawFeCDiagram();
+        }
+        
+        function markPoint() {
+            alert('Point marked! (Feature available in extended version)');
+        }
+        
+        function resetAnalysis() {
+            document.getElementById('carbonSlider').value = 0.8;
+            document.getElementById('tempSlider').value = 700;
+            updateAnalysis();
+        }
+        
+        window.addEventListener('load', initCanvas);
+        window.addEventListener('resize', () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            updateAnalysis();
+        });
+    </script>
+</body>
+</html>

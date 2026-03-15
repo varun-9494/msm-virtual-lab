@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 8 - Lever Rule Calculator | BVRIT MSM Virtual Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #060d18;
+            --panel: rgba(6,16,32,0.92);
+            --border: rgba(255,255,255,0.07);
+            --cyan: #00d4ff;
+            --gold: #ffc94d;
+            --green: #39e87a;
+            --text: #d8eaf8;
+            --muted: #4a6a88;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #0f1720 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(3,8,18,0.96);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .title-icon {
+            font-size: 2rem;
+            color: var(--green);
+            text-shadow: 0 0 20px rgba(57,232,122,0.5);
+        }
+        
+        .title-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        
+        .title-text p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            background: var(--cyan);
+            color: var(--bg);
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 320px;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .panel h2 {
+            font-size: 1rem;
+            color: var(--green);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        .control-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(10,25,47,0.8);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: var(--green);
+            outline: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background: var(--green);
+            color: var(--bg);
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            box-shadow: 0 0 15px rgba(57,232,122,0.4);
+            transform: translateY(-2px);
+        }
+        
+        #leverDiagram {
+            width: 100%;
+            height: 400px;
+            background: rgba(10,25,47,0.4);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .calculation-panel {
+            background: rgba(57,232,122,0.1);
+            border: 1px solid var(--green);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .calc-section {
+            margin-bottom: 15px;
+        }
+        
+        .calc-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .calc-title {
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        
+        .calc-formula {
+            background: rgba(10,25,47,0.6);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #00d4ff;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--green);
+        }
+        
+        .calc-value {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .calc-value:last-child {
+            border-bottom: none;
+        }
+        
+        .value-label {
+            color: var(--muted);
+        }
+        
+        .value-result {
+            color: var(--green);
+            font-weight: 700;
+            font-family: monospace;
+        }
+        
+        .answer-input-group {
+            background: rgba(255,201,77,0.1);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .answer-input-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .answer-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .answer-row input {
+            flex: 1;
+            padding: 8px;
+            background: rgba(10,25,47,0.8);
+            border: 1px solid var(--gold);
+            color: var(--text);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .check-answer-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--gold);
+            color: var(--bg);
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+        
+        .result-message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-correct {
+            background: rgba(57,232,122,0.2);
+            border: 1px solid var(--green);
+            color: var(--green);
+        }
+        
+        .result-incorrect {
+            background: rgba(255,77,109,0.2);
+            border: 1px solid #ff4d6d;
+            color: #ff4d6d;
+        }
+        
+        @media (max-width: 1400px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title">
+                <div class="title-icon">⚖</div>
+                <div class="title-text">
+                    <h1>EXPERIMENT 8</h1>
+                    <p>LEVER RULE CALCULATOR</p>
+                </div>
+            </div>
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Lab
+            </a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-grid">
+            <!-- LEFT PANEL: INPUT -->
+            <div class="panel">
+                <h2><i class="fas fa-calculator"></i> Problem Setup</h2>
+                
+                <div class="control-group">
+                    <label class="control-label">System</label>
+                    <select id="systemSelect" onchange="loadProblem()">
+                        <option value="Cu-Ni">Cu-Ni (1100°C)</option>
+                        <option value="Al-Si">Al-Si (600°C)</option>
+                        <option value="Pb-Sn">Pb-Sn (200°C)</option>
+                        <option value="Fe-C">Fe-C (750°C)</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Alloy Composition (wt%)</label>
+                    <input type="number" id="alloyComp" min="0" max="100" step="0.1" value="30" onchange="updateCalculation()">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Phase 1 Composition (wt%)</label>
+                    <input type="number" id="phase1Comp" min="0" max="100" step="0.1" value="0" onchange="updateCalculation()">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Phase 2 Composition (wt%)</label>
+                    <input type="number" id="phase2Comp" min="0" max="100" step="0.1" value="100" onchange="updateCalculation()">
+                </div>
+                
+                <button onclick="calculateLeverRule()"><i class="fas fa-play"></i> Calculate</button>
+                <button onclick="resetCalculator()" style="background: var(--cyan); color: var(--bg);"><i class="fas fa-redo"></i> Reset</button>
+            </div>
+            
+            <!-- MIDDLE PANEL: VISUALIZATION & CALCULATION -->
+            <div class="panel">
+                <h2><i class="fas fa-chart-line"></i> Lever Rule Diagram</h2>
+                <canvas id="leverDiagram"></canvas>
+                
+                <div class="calculation-panel" id="calculationPanel" style="display: none;">
+                    <div class="calc-section">
+                        <div class="calc-title">Step 1: Tie Line Length</div>
+                        <div class="calc-formula">L = C₂ - C₁</div>
+                        <div class="calc-value">
+                            <span class="value-label">Tie Line Length:</span>
+                            <span class="value-result" id="tieLineLength">—</span>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-section">
+                        <div class="calc-title">Step 2: Lever Arm Lengths</div>
+                        <div class="calc-formula">L₁ = C₀ - C₁ | L₂ = C₂ - C₀</div>
+                        <div class="calc-value">
+                            <span class="value-label">Left Arm (L₁):</span>
+                            <span class="value-result" id="leftArm">—</span>
+                        </div>
+                        <div class="calc-value">
+                            <span class="value-label">Right Arm (L₂):</span>
+                            <span class="value-result" id="rightArm">—</span>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-section">
+                        <div class="calc-title">Step 3: Phase Fractions</div>
+                        <div class="calc-formula">Wt% Phase 1 = L₂/L × 100%</div>
+                        <div class="calc-formula" style="margin-bottom: 8px;">Wt% Phase 2 = L₁/L × 100%</div>
+                        <div class="calc-value">
+                            <span class="value-label">Phase 1 Amount:</span>
+                            <span class="value-result" id="phase1Amount">—</span>
+                        </div>
+                        <div class="calc-value">
+                            <span class="value-label">Phase 2 Amount:</span>
+                            <span class="value-result" id="phase2Amount">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RIGHT PANEL: ANSWER VERIFICATION -->
+            <div class="panel">
+                <h2><i class="fas fa-check-circle"></i> Answer Check</h2>
+                
+                <div class="answer-input-group">
+                    <label>Enter your answers:</label>
+                    <div class="answer-row">
+                        <div style="flex: 1;">
+                            <label style="display: block; font-size: 0.7rem; color: var(--muted); margin-bottom: 3px;">Phase 1 (%)</label>
+                            <input type="number" id="userPhase1" placeholder="0.0" step="0.1" min="0" max="100">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; font-size: 0.7rem; color: var(--muted); margin-bottom: 3px;">Phase 2 (%)</label>
+                            <input type="number" id="userPhase2" placeholder="0.0" step="0.1" min="0" max="100">
+                        </div>
+                    </div>
+                    
+                    <button class="check-answer-btn" onclick="checkAnswer()">
+                        <i class="fas fa-check"></i> Check Answer
+                    </button>
+                    
+                    <div class="result-message" id="resultMessage"></div>
+                </div>
+                
+                <div style="background: rgba(0,212,255,0.1); border: 1px solid var(--cyan); border-radius: 6px; padding: 12px; font-size: 0.8rem; margin-top: 20px;">
+                    <p><strong>Lever Rule:</strong> The ratio of distances on the tie line is inversely proportional to the phase amounts.</p>
+                    <p style="margin-top: 8px; color: var(--muted);">Distance to Phase 1 ÷ Distance to Phase 2 = Wt% Phase 2 ÷ Wt% Phase 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const problemData = {
+            'Cu-Ni': {
+                temp: 1100,
+                alloyDefault: 30,
+                phase1Default: 0,
+                phase2Default: 100,
+                description: 'Cu-30% Ni at 1100°C'
+            },
+            'Al-Si': {
+                temp: 600,
+                alloyDefault: 12,
+                phase1Default: 0,
+                phase2Default: 100,
+                description: 'Al-12% Si at 600°C'
+            },
+            'Pb-Sn': {
+                temp: 200,
+                alloyDefault: 40,
+                phase1Default: 0,
+                phase2Default: 100,
+                description: 'Pb-40% Sn at 200°C'
+            },
+            'Fe-C': {
+                temp: 750,
+                alloyDefault: 0.8,
+                phase1Default: 0,
+                phase2Default: 6.67,
+                description: 'Fe-0.8% C at 750°C'
+            }
+        };
+        
+        let canvas, ctx;
+        let currentCalculation = null;
+        
+        function initCanvas() {
+            canvas = document.getElementById('leverDiagram');
+            ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            drawEmptyDiagram();
+        }
+        
+        function drawEmptyDiagram() {
+            ctx.fillStyle = 'rgba(10,25,47,0.4)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'rgba(212,212,212,0.3)';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Enter values and click Calculate', canvas.width / 2, canvas.height / 2);
+        }
+        
+        function drawLeverDiagram(c0, c1, c2) {
+            ctx.fillStyle = 'rgba(10,25,47,0.4)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const padding = 60;
+            const y = canvas.height / 2;
+            const width = canvas.width - 2 * padding;
+            
+            // Phase positions on tie line
+            const x1 = padding + (c1 / 100) * width;
+            const x0 = padding + (c0 / 100) * width;
+            const x2 = padding + (c2 / 100) * width;
+            
+            // Draw tie line
+            ctx.strokeStyle = 'var(--cyan)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x1, y);
+            ctx.lineTo(x2, y);
+            ctx.stroke();
+            
+            // Draw phase points
+            ctx.fillStyle = 'var(--cyan)';
+            ctx.beginPath();
+            ctx.arc(x1, y, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'var(--gold)';
+            ctx.beginPath();
+            ctx.arc(x2, y, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw alloy point
+            ctx.fillStyle = 'var(--green)';
+            ctx.beginPath();
+            ctx.arc(x0, y, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw lever arms
+            ctx.strokeStyle = 'rgba(57,232,122,0.6)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            
+            ctx.beginPath();
+            ctx.moveTo(x0, y - 30);
+            ctx.lineTo(x0, y + 30);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // Labels
+            ctx.fillStyle = '#d8eaf8';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'center';
+            
+            ctx.fillText(`Phase 1\n${c1.toFixed(1)}%`, x1, y - 40);
+            ctx.fillText(`Phase 2\n${c2.toFixed(1)}%`, x2, y - 40);
+            ctx.fillText(`Alloy\n${c0.toFixed(1)}%`, x0, y + 40);
+            
+            // Arm length labels
+            const l1 = Math.abs(x0 - x1);
+            const l2 = Math.abs(x2 - x0);
+            ctx.font = '11px sans-serif';
+            ctx.fillText(`L₂=${(l2 / width * 100).toFixed(1)}%`, (x0 + x2) / 2, y - 20);
+            ctx.fillText(`L₁=${(l1 / width * 100).toFixed(1)}%`, (x1 + x0) / 2, y + 20);
+        }
+        
+        function loadProblem() {
+            const system = document.getElementById('systemSelect').value;
+            const data = problemData[system];
+            document.getElementById('alloyComp').value = data.alloyDefault;
+            document.getElementById('phase1Comp').value = data.phase1Default;
+            document.getElementById('phase2Comp').value = data.phase2Default;
+            updateCalculation();
+        }
+        
+        function calculateLeverRule() {
+            const c0 = parseFloat(document.getElementById('alloyComp').value);
+            const c1 = parseFloat(document.getElementById('phase1Comp').value);
+            const c2 = parseFloat(document.getElementById('phase2Comp').value);
+            
+            if (isNaN(c0) || isNaN(c1) || isNaN(c2)) {
+                alert('Please enter all values');
+                return;
+            }
+            
+            if (c0 < c1 || c0 > c2) {
+                alert('Alloy composition must be between Phase 1 and Phase 2 compositions');
+                return;
+            }
+            
+            const tieLineLength = c2 - c1;
+            const leftArm = c0 - c1;
+            const rightArm = c2 - c0;
+            
+            const wt_phase1 = (rightArm / tieLineLength) * 100;
+            const wt_phase2 = (leftArm / tieLineLength) * 100;
+            
+            currentCalculation = { c0, c1, c2, wt_phase1, wt_phase2 };
+            
+            // Update display
+            document.getElementById('tieLineLength').textContent = tieLineLength.toFixed(2) + '%';
+            document.getElementById('leftArm').textContent = leftArm.toFixed(2) + '%';
+            document.getElementById('rightArm').textContent = rightArm.toFixed(2) + '%';
+            document.getElementById('phase1Amount').textContent = wt_phase1.toFixed(1) + '%';
+            document.getElementById('phase2Amount').textContent = wt_phase2.toFixed(1) + '%';
+            
+            document.getElementById('calculationPanel').style.display = 'block';
+            drawLeverDiagram(c0, c1, c2);
+        }
+        
+        function updateCalculation() {
+            const c0 = parseFloat(document.getElementById('alloyComp').value);
+            const c1 = parseFloat(document.getElementById('phase1Comp').value);
+            const c2 = parseFloat(document.getElementById('phase2Comp').value);
+            
+            if (!isNaN(c0) && !isNaN(c1) && !isNaN(c2) && c1 < c0 && c0 < c2) {
+                drawLeverDiagram(c0, c1, c2);
+            }
+        }
+        
+        function checkAnswer() {
+            if (!currentCalculation) {
+                alert('Please calculate first');
+                return;
+            }
+            
+            const userPhase1 = parseFloat(document.getElementById('userPhase1').value);
+            const userPhase2 = parseFloat(document.getElementById('userPhase2').value);
+            
+            if (isNaN(userPhase1) || isNaN(userPhase2)) {
+                alert('Please enter both answers');
+                return;
+            }
+            
+            const tolerance = 0.5;
+            const phase1Correct = Math.abs(userPhase1 - currentCalculation.wt_phase1) < tolerance;
+            const phase2Correct = Math.abs(userPhase2 - currentCalculation.wt_phase2) < tolerance;
+            
+            const resultMsg = document.getElementById('resultMessage');
+            resultMsg.style.display = 'block';
+            
+            if (phase1Correct && phase2Correct) {
+                resultMsg.textContent = '✓ CORRECT! Great job!';
+                resultMsg.className = 'result-message result-correct';
+            } else {
+                resultMsg.textContent = `✗ Incorrect. Phase 1: ${currentCalculation.wt_phase1.toFixed(1)}%, Phase 2: ${currentCalculation.wt_phase2.toFixed(1)}%`;
+                resultMsg.className = 'result-message result-incorrect';
+            }
+        }
+        
+        function resetCalculator() {
+            document.getElementById('calculationPanel').style.display = 'none';
+            document.getElementById('resultMessage').style.display = 'none';
+            document.getElementById('userPhase1').value = '';
+            document.getElementById('userPhase2').value = '';
+            currentCalculation = null;
+            drawEmptyDiagram();
+        }
+        
+        window.addEventListener('load', initCanvas);
+        window.addEventListener('resize', () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            if (currentCalculation) {
+                drawLeverDiagram(currentCalculation.c0, currentCalculation.c1, currentCalculation.c2);
+            } else {
+                drawEmptyDiagram();
+            }
+        });
+    </script>
+</body>
+</html>
